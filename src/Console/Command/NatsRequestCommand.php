@@ -3,16 +3,17 @@
 namespace Exo\Console\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use RuntimeException;
 
 class NatsRequestCommand extends AbstractCommand
 {
-    /**
-     * {@inheritdoc}
-     */
+    protected string $host;
+    protected int $port;
+    protected string $username;
+    protected string $password;
+    protected \Nats\Connection $client;
+
     protected function configure()
     {
         $this->ignoreValidationErrors();
@@ -28,30 +29,25 @@ class NatsRequestCommand extends AbstractCommand
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $exo = $this->getExo($input, $output);
         $inputArray = [];
 
         $filename = $input->getArgument('filename');
         if (!$filename) {
-            $filename = "php://stdin";
+            $filename = 'php://stdin';
         }
         $requestJson = file_get_contents($filename);
         $request = json_decode($requestJson, true);
         if (!$request) {
-            throw new RuntimeException("Can't parse request JSON from " . $filename);
+            throw new \RuntimeException("Can't parse request JSON from ".$filename);
         }
 
         $streamContextOptions = [
             'ssl' => [
             ],
         ];
-
-
 
         $connectionOptions = new \Nats\ConnectionOptions();
 
@@ -60,8 +56,8 @@ class NatsRequestCommand extends AbstractCommand
         $this->username = getenv('EXO__WORKER__NATS__USERNAME');
         $this->password = getenv('EXO__WORKER__NATS__PASSWORD');
 
-        if (getenv('EXO__WORKER__NATS__SSL__VERIFY_PEER')=='false') {
-            $exo->getLogger()->debug("Setting ssl.verify_peer to false");
+        if ('false' == getenv('EXO__WORKER__NATS__SSL__VERIFY_PEER')) {
+            $exo->getLogger()->debug('Setting ssl.verify_peer to false');
             $streamContextOptions['ssl']['verify_peer'] = false;
         }
         $streamContext = stream_context_get_default($streamContextOptions);
@@ -82,7 +78,7 @@ class NatsRequestCommand extends AbstractCommand
         $subject = 'exo:request';
         $payload = gzencode($requestJson);
 
-        $exo->getLogger()->info("Sending NATS request", ['request' => $request]);
+        $exo->getLogger()->info('Sending NATS request', ['request' => $request]);
 
         $response = null;
         $out = $this->client->request(
@@ -93,13 +89,14 @@ class NatsRequestCommand extends AbstractCommand
                 $responseJson = gzdecode($message->getBody());
                 $response = json_decode($responseJson, true);
                 if (!$response) {
-                    $exo->getLogger()->error("Failed to parse response as JSON", ['responseJson' => $responseJson]);
-                    throw new RuntimeException("Failed to parse response as JSON: " . $responseJson);
+                    $exo->getLogger()->error('Failed to parse response as JSON', ['responseJson' => $responseJson]);
+                    throw new \RuntimeException('Failed to parse response as JSON: '.$responseJson);
                 }
-                $exo->getLogger()->debug("Received response", ['response' => $responseJson]);
-                echo json_encode($response, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES) . PHP_EOL;
+                $exo->getLogger()->debug('Received response', ['response' => $responseJson]);
+                echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES).PHP_EOL;
             }
         );
+
         return 0; // TODO: check exitcode
     }
 }

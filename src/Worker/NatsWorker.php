@@ -15,6 +15,8 @@ class NatsWorker implements WorkerInterface
     protected $password;
     protected $streamContextOptions;
     protected $messages = [];
+    protected $client;
+    protected $subscriptionId;
 
     public function __construct(Exo $exo, array $options)
     {
@@ -23,7 +25,7 @@ class NatsWorker implements WorkerInterface
         $this->port = $options['PORT'] ?? 4222;
         $this->username = $options['USERNAME'] ?? null;
         $this->password = $options['PASSWORD'] ?? null;
-       
+
         if (!$this->host) {
             throw new RuntimeException("Required HOST for Nats worker not configured (correctly)");
         }
