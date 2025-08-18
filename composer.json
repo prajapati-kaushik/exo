@@ -21,7 +21,7 @@
     "require": {
         "php": ">=7.0",
         "andrewfenn/pid-helper": "^0.1.0",
-        "justinrainbow/json-schema": "^5.0",
+        "justinrainbow/json-schema": "^5.0|^6.0",
         "linkorb/boost": "^1.0",
         "linkorb/collection": "^1.0",
         "linkorb/config": "^1.0",
