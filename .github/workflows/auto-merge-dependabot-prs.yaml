@@ -1,0 +1,24 @@
+# Managed by https://github.com/linkorb/repo-ansible. Manual changes will be overwritten.
+name: Auto-merge Dependabot PRs
+on:
+  # XXX merge PRs when opened, or reopened, but not when synchronized to protect against "Deputy Confusion Injection"
+  pull_request_target:
+    types: [opened, reopened]
+
+permissions:
+  pull-requests: write # required for the action to read metadata
+  contents: write # required for the gh client to read/merge commits
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    steps:
+      - id: metadata
+        uses: dependabot/fetch-metadata@v2
+
+      - if: steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch'
+        run: gh pr merge --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ github.token }}

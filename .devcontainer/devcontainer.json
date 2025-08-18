@@ -1,0 +1,54 @@
+// Managed by https://github.com/linkorb/repo-ansible. Manual changes will be overwritten.
+{
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/app",
+
+  "hostRequirements": {
+      "cpus": 2,
+      "memory": "8gb",
+      "storage": "32gb"
+  },
+
+  "features": {
+      "ghcr.io/devcontainers/features/github-cli:1": {},
+      "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+
+  "customizations": {
+      // auto-generated based on repo-ansible defaults + repo.yaml (devcontainer.customizations_vscode) definition
+      "vscode":
+{
+  "extensions": [
+    "xdebug.php-debug",
+    "bmewburn.vscode-intelephense-client",
+    "mrmlnc.vscode-apache",
+    "74th.json-yaml-schema-selector"
+  ],
+  "settings": {
+    "php.validate.executablePath": "/usr/local/bin/php",
+    "yaml.schemas": {
+      "https://raw.githubusercontent.com/linkorb/repo-ansible/main/repo.schema.yaml": [
+        "repo.yaml"
+      ]
+    },
+    "redhat.telemetry.enabled": false
+  }
+}
+  },
+  "forwardPorts": [ 80, 8000 ],
+  "remoteUser": "vscode",
+
+  "secrets": {
+    "PACKAGIST_TOKEN": {
+      "description": "Packagist access token, required for installation of composer packages from private packagist",
+      "documentationUrl": "https://packagist.com/orgs/linkorb"
+    }
+  },
+  "remoteEnv": {
+    "GITHUB_USER_ON_HOST": "${localEnv:GITHUB_USER}",
+    "PACKAGIST_TOKEN_ON_HOST": "${localEnv:PACKAGIST_TOKEN}"
+  },
+  "postCreateCommand": ".devcontainer/postCreate.sh",
+  "postStartCommand": ".devcontainer/postStart.sh"
+}

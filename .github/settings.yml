@@ -1,0 +1,108 @@
+# Managed by https://github.com/linkorb/repo-ansible. Manual changes will be overwritten.
+# These settings are synced to GitHub by https://probot.github.io/apps/settings/
+# See https://docs.github.com/en/rest/reference/repos#update-a-repository for all available settings.
+
+repository:
+
+  # The name of the repository. Changing this will rename the repository
+  name:  exo
+
+  # A short description of the repository that will show up on GitHub
+  description: "FaaS framework supporting externalized Actions and Triggers"
+
+
+  # A URL with more information about the repository
+  homepage: https://engineering.linkorb.com
+
+
+  # Either `true` to make the repository private, or `false` to make it public.
+  private: true
+
+  has_issues: false
+
+  # Either `true` to enable projects for this repository, or `false` to disable them.
+  # If projects are disabled for the organization, passing `true` will cause an API error.
+  has_projects: false
+
+  has_wiki: false
+
+  # Either `true` to enable downloads for this repository, `false` to disable them.
+  has_downloads: true
+
+  # Updates the default branch for this repository.
+  default_branch: main
+
+  # Either `true` to allow squash-merging pull requests, or `false` to prevent
+  # squash-merging.
+  allow_squash_merge: true
+
+  # Either `true` to allow merging pull requests with a merge commit, or `false`
+  # to prevent merging pull requests with merge commits.
+  allow_merge_commit: true
+
+  # Either `true` to allow rebase-merging pull requests, or `false` to prevent
+  # rebase-merging.
+  allow_rebase_merge: true
+
+  # Either `true` to enable automatic deletion of branches on merge, or `false` to disable
+  delete_branch_on_merge: true
+
+  # Either `true` to enable automated security fixes, or `false` to disable
+  # automated security fixes.
+  enable_automated_security_fixes: true
+
+  # Either `true` to enable vulnerability alerts, or `false` to disable
+  # vulnerability alerts.
+  enable_vulnerability_alerts: true
+
+# Labels: define labels for Issues and Pull Requests
+labels:
+  - name: feat
+    description: non-breaking change which adds new functionality
+    color: "1D76DB"  # Blue for features (enhancements)
+
+  - name: fix
+    description: non-breaking change which fixes a bug or an issue
+    color: "D73A4A"  # Red for fixes (issues, bugs)
+
+  - name: chore(deps)
+    description: changes to dependencies
+    color: "C2E0C6"  # Light green for dependency updates
+
+  - name: test
+    description: adds or modifies a test
+    color: "E99695"  # Light red/pink for test updates
+
+  - name: docs
+    description: creates or updates documentation
+    color: "0075CA"  # Bright blue for documentation changes
+
+  - name: style
+    description: changes that do not affect the meaning or function of code (e.g. formatting, whitespace, missing semi-colons etc.)
+    color: "6E5494"  # Purple for styling (formatting)
+
+  - name: perf
+    description: code change that improves performance
+    color: "FFC107"  # Yellow for performance improvements
+
+  - name: revert
+    description: reverts a commit
+    color: "000000"  # Black for revert actions
+
+  - name: refactor
+    description: code change that neither fix a bug nor add a new feature
+    color: "F9D0C4"  # Peach/light red for refactoring
+
+  - name: ci
+    description: changes to continuous integration or continuous delivery scripts or configuration files
+    color: "A2EEEF"  # Light blue for CI/CD updates
+
+  - name: chore
+    description: general tasks or anything that doesn't fit the other commit types
+    color: "BFDADC"  # Muted teal for general chores
+
+  - name: "BREAKING CHANGE"
+    description: fix or feature that would cause existing functionality to not work as expected
+    color: "FF0000"  # Bright red for breaking changes (critical)
+
+# Milestones: define milestones for Issues and Pull Requests
