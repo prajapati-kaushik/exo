@@ -2,23 +2,24 @@
 
 namespace Exo\Core\Model;
 
-use Exo\Core\Utils\JsonUtils;
-use Exo\Core\Utils\ArrayUtils;
+use Collection\TypedArray;
 use Exo\Core\Exception;
 use Exo\Core\Model\Action;
-use Collection\TypedArray;
-use JsonSchema\Validator;
+use Exo\Core\Utils\ArrayUtils;
+use Exo\Core\Utils\JsonUtils;
 use JsonSchema\Constraints\Constraint;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use JsonSchema\Validator;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * @method Action[]|TypedArray getActions()
  */
 class Exo extends AbstractModel
 {
+    protected $logger;
     protected $name;
     protected $description;
     // protected $packages = [];

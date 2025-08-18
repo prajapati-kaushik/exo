@@ -2,13 +2,13 @@
 
 namespace Exo\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use RuntimeException;
 use Exo\Core\Utils\ArrayUtils;
 use PidHelper\PidHelper;
+use RuntimeException;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class WorkerCommand extends AbstractCommand
 {
@@ -27,7 +27,7 @@ class WorkerCommand extends AbstractCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $exo = $this->getExo($input, $output);
 
@@ -83,8 +83,8 @@ class WorkerCommand extends AbstractCommand
         }
 
 
-      
-       
+
+
         $exo->getLogger()->info("Starting worker", ['workerType' => $workerType, 'exoId' => $exo->getId()]);
         $className = 'Exo\\Worker\\' . $workerType . 'Worker';
         $adapter = new $className($exo, $options);
