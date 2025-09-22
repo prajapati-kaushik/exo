@@ -1,6 +1,6 @@
 codeowners:
 - owners:
-  - '@jfaassen'
+  - '@joostfaassen'
   pattern: '*'
 description: FaaS framework supporting externalized Actions and Triggers
 license: mit
